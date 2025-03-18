@@ -15,7 +15,3 @@ def before_each_after_each(page: Page):
 def test_main_navigation(page: Page):
     # Assertions use the expect API.
     expect(page).to_have_url("https://playwright.dev/")
-
-    # Test update
-    """Update file"""
-    """Update file2"""
