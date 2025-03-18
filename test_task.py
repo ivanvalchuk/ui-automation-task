@@ -18,3 +18,4 @@ def test_main_navigation(page: Page):
 
     # Test update
     """Update file"""
+    """Update file2"""
