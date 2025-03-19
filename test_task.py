@@ -1,17 +1,12 @@
-import pytest
+import re
 from playwright.sync_api import Page, expect
 
-@pytest.fixture(scope="function", autouse=True)
-def before_each_after_each(page: Page):
-    
-    print("before the test runs")
 
-    # Go to the starting url before each test.
-    page.goto("https://playwright.dev/")
-    yield
-    
-    print("after the test runs")
-
-def test_main_navigation(page: Page):
-    # Assertions use the expect API.
-    expect(page).to_have_url("https://playwright.dev/")
+def test_founders_section(page: Page):
+    page.goto("https://www.bamfunds.com/")
+    page.get_by_role("button", name="Accept cookies").click()
+    page.get_by_label("Header").get_by_role("link", name="About us").hover()
+    page.get_by_label("Header").get_by_role("link", name="Leadership").click()
+    expect(page.get_by_role("link", name="Leadership Headshot Dmitry")).to_be_visible()
+    expect(page.get_by_role("link", name="Leadership Headshot Taylor O'")).to_be_visible()
+    expect(page.get_by_role("link", name="Leadership Headshot Scott")).to_be_visible()
