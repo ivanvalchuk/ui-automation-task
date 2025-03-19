@@ -4,11 +4,11 @@ from playwright.sync_api import Page, expect
 @pytest.fixture(scope="function", autouse=True)
 def before_each_after_each (page: Page):
         
-        # Go to the starting url before each test.
-        page.goto("https://www.bamfunds.com/")
+    # Go to the starting url before each test.
+    page.goto("https://www.bamfunds.com/")
 
-        # Accept the use of cookies
-        page.get_by_role("button", name="Accept cookies").click()
+    # Accept the use of cookies
+    page.get_by_role("button", name="Accept cookies").click()
 
 def test_founders_section(page: Page):
 
