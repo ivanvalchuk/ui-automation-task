@@ -6,7 +6,6 @@ def before_each_after_each (page: Page):
         
     # Go to the starting url before each test.
     page.goto("https://www.bamfunds.com/")
-
     # Accept the use of cookies
     page.get_by_role("button", name="Accept cookies").click()
 
