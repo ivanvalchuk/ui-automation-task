@@ -1,3 +1,5 @@
+import os
+import pytest
 from pytest import fixture
 from playwright.sync_api import sync_playwright
 from page_objects.application import App
@@ -9,9 +11,11 @@ def get_playwright():
     with sync_playwright() as playwright:
         yield playwright
 
-@fixture
+@fixture(params= ['chromium', 'firefox', 'webkit'], ids=['chromium', 'firefox', 'webkit'])
 def get_browser(get_playwright, request):
-    browser = ' '.join(request.config.getoption('--browser'))
+    # browser = ' '.join(request.config.getoption('--browser'))
+    browser = request.param
+    os.environ['PWBROWSER']=browser
     headless = request.config.getini('headless')
     
     if headless == 'True':
@@ -29,6 +33,7 @@ def get_browser(get_playwright, request):
     
     yield bro
     bro.close()
+    del os.environ['PWBROWSER']
 
 @fixture
 def desktop_app(get_browser, request):
@@ -38,10 +43,13 @@ def desktop_app(get_browser, request):
     yield app
     app.close()
 
-@fixture
+@fixture(params= ['iPhone 15', 'Pixel 7'])
 def mobile_app(get_playwright, get_browser, request):
+    if os.environ['PWBROWSER'] == 'firefox':
+        pytest.skip()
     base_url = request.config.getini('base_url')
-    device = request.config.getoption('--device')
+    # device = request.config.getoption('--device')
+    device = request.param
     device_config = get_playwright.devices.get(device)
 
     if device_config is not None:
@@ -55,7 +63,7 @@ def mobile_app(get_playwright, get_browser, request):
     app.close()
 
 def pytest_addoption(parser):
-#     # parser.addoption('--device', action ='store', default= '')
+    # parser.addoption('--device', action ='store', default= '')
     # parser.addoption('--browser', action ='store', default= 'chromium')
-#     # parser.addini('base_url', help = "base url of the site under test", default = "https://www.bamfunds.com")
+    # parser.addini('base_url', help = "base url of the site under test")
     parser.addini('headless', help = "run browser in headless mode")
