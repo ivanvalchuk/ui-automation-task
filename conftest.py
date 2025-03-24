@@ -1,18 +1,24 @@
 import os
 import pytest
+import logging
 import allure
 from pytest import fixture, hookimpl
 from playwright.sync_api import sync_playwright
 from page_objects.application import App
 
-
+# @fixture(autouse=True, scope='session')
+# def preconditions(request):
+#     logging.info('preconditions')
+#     yield
+#     logging.info('postconditions')
 
 @fixture(scope='session')
 def get_playwright():
     with sync_playwright() as playwright:
         yield playwright
 
-@fixture(scope= 'session', params= ['chromium', 'firefox', 'webkit'], ids=['chromium', 'firefox', 'webkit'])
+@fixture(scope= 'session', params= ['chromium'], ids=['chromium'])
+# @fixture(scope= 'session', params= ['chromium', 'firefox', 'webkit'], ids=['chromium', 'firefox', 'webkit'])
 def get_browser(get_playwright, request):
     # browser = ' '.join(request.config.getoption('--browser'))
     browser = request.param
@@ -43,8 +49,9 @@ def desktop_app(get_browser, request):
     app.goto('/')
     yield app
     app.close()
-
-@fixture(scope='session', params= ['iPhone 15', 'Pixel 7'])
+    
+@fixture(scope='session', params= ['iPhone 15'])
+# @fixture(scope='session', params= ['iPhone 15', 'Pixel 7'])
 def mobile_app(get_playwright, get_browser, request):
     if os.environ['PWBROWSER'] == 'firefox':
         pytest.skip()

@@ -1,6 +1,6 @@
 import allure
 from playwright.sync_api import Browser
-from .test_cases import TestCases
+from .leadership import Leadership
 
 class App:
     def __init__(self, browser: Browser, base_url: str, **kwargs):
@@ -8,13 +8,14 @@ class App:
         self.context = self.browser.new_context(**kwargs)
         self.page = self.context.new_page()
         self.base_url = base_url
-        self.test_cases = TestCases(self.page)
+        self.leadership = Leadership(self.page)
     @allure.step
     def goto(self, endpoint: str, use_base_url=True):
         if use_base_url:
             self.page.goto(self.base_url + endpoint)
         else:
             self.page.goto(endpoint)
+    
     @allure.step
     def hover_over(self, menu: str):
         self.page.get_by_label("Header").get_by_role("link", name = menu).hover()
@@ -22,9 +23,6 @@ class App:
     def navigate_to(self, menu: str):
         self.page.get_by_label("Header").get_by_role("link", name = menu).click()
         self.page.wait_for_load_state()
-    @allure.step
-    def check_founders_exist(self, founder_name: str):
-        return self.page.get_by_role("link", name=founder_name) is not None
     @allure.step
     def click_menu_button(self, menu: str):
         self.page.get_by_role("button", name = menu).click()
