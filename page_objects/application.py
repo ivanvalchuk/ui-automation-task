@@ -1,5 +1,6 @@
 import allure
-from playwright.sync_api import Browser
+import re
+from playwright.sync_api import Browser, expect
 from .leadership import Leadership
 
 class App:
@@ -18,11 +19,11 @@ class App:
     
     @allure.step
     def hover_over(self, menu: str):
+        self.page.get_by_label("Header").get_by_role("link", name = menu).wait_for(state="visible")
         self.page.get_by_label("Header").get_by_role("link", name = menu).hover()
     @allure.step
     def navigate_to(self, menu: str):
         self.page.get_by_label("Header").get_by_role("link", name = menu).click()
-        self.page.wait_for_load_state()
     @allure.step
     def click_menu_button(self, menu: str):
         self.page.get_by_role("button", name = menu).click()
