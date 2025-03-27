@@ -1,16 +1,10 @@
 import os
 import pytest
-import logging
 import allure
 from pytest import fixture, hookimpl
 from playwright.sync_api import sync_playwright
 from page_objects.application import App
 
-# @fixture(autouse=True, scope='session')
-# def preconditions(request):
-#     logging.info('preconditions')
-#     yield
-#     logging.info('postconditions')
 
 @fixture(scope='session')
 def get_playwright():
