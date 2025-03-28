@@ -18,10 +18,12 @@
 - "pytest -m mobile" - runs the tests on emualated mobile devices (e.g. iPhone 15).
 - "pytest -m desktop --lf" / "pytest -m mobile --lf" - re-runs the previous failed tests for Desktop / Mobile.
 By default, the tests are run in the 'headless' mode and on Chromium browser on Desktop and iPhone 15. In order to change to the 'headed'  mode, please change this in "./pytest.ini" by setting headless to False. Adding support for other browsers (Firefox, Webkit)
-can be done in the "./conftest" file by adding params to the corresponding fixtures, e.g. "firefox", "webkit", "Galaxy S9+", "iPhone 14".
+can be done in the "./conftest" file by adding them to the params of the corresponding fixtures, e.g. params = ['firefox', 'webkit', 'Galaxy S9'], params = ['iPhone 14', 'Pixel 7'].
 
 ### How to set up reporting
 1. Install the plugin for Alure reporting using "pip install allure-pytest".
 2. Install Allure via "brew install allure" for Mac or check https://allurereport.org/docs/install for other operating systems.
 3. "cd" to the folder "ui-automation-task" and go to "tests".
 4. Run the command for generating the report: "allure serve report".
+
+### The tests are also run on each push and pull request to the respository in GitHub, which is configured in "playwright.yml" as part of the ".github/workflows" folder.
