@@ -13,7 +13,6 @@ def test_accept_cookies(desktop_app):
 def test_founders(desktop_app):
     founder_names = "Dmitry Balyasny", "Taylor O'Malley", "Scott Schroeder"
     desktop_app.hover_over('About us')
-    desktop_app.hover_over('About us')
     desktop_app.navigate_to_menu('Leadership')
     for founder_name in founder_names:
         assert desktop_app.leadership.check_founders_exist(founder_name)

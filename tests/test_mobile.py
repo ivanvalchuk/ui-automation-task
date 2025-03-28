@@ -24,9 +24,6 @@ def test_validation(mobile_app):
     mobile_app.navigate_to_footer('Contact us')
      #Trigger errors on the form
     mobile_app.click_button('Submit')
-    mobile_app.click_button('Submit')
-    mobile_app.click_button('Submit')
-    mobile_app.click_button('Submit')
     validation_messages = "^First Name\*This field is required$", "^Last Name\*This field is required$", "^E-mail Address\*This field is required$",
     "^Your Message\*This field is required$"
     for validation_message in validation_messages:
