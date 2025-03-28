@@ -1,4 +1,5 @@
 # ignore directories:
 __pycache__
 test-results
+tests/report
 
