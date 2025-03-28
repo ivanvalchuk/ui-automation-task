@@ -2,6 +2,7 @@ import allure
 from playwright.sync_api import Browser
 from .leadership import Leadership
 from .contact_us import Contact
+from .locations import Location
 
 class App:
     def __init__(self, browser: Browser, base_url: str, **kwargs):
@@ -11,6 +12,7 @@ class App:
         self.base_url = base_url
         self.leadership = Leadership(self.page)
         self.contact_us = Contact(self.page)
+        self.locations = Location(self.page)
 
     @allure.step
     def goto(self, endpoint: str, use_base_url=True):
@@ -25,16 +27,17 @@ class App:
 
     @allure.step
     def navigate_to(self, link: str):
-        self.page.get_by_role("link", name = link, exact=True).click()
+        self.page.get_by_role("link", name = link).click()
    
     @allure.step
     def navigate_to_menu(self, menu: str):
         self.page.get_by_label("Header").get_by_role("link", name = menu).click()
     
     @allure.step
-    def click_button(self, menu: str):
-        self.page.get_by_role("button", name = menu).click()
-
+    def click_button(self, button: str):
+        self.page.get_by_role("button", name = button).click()
+        
+    
     def close(self):
-        self.page.close()
+        self.page.close()   
         self.context.close()
