@@ -24,7 +24,9 @@ jobs:
         pip install pytest-playwright
         playwright install
     - name: Run your tests
-      run: pytest --tracing=retain-on-failure
+      run: |
+        pip install allure-pytest
+        pytest --tracing=retain-on-failure
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
