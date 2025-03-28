@@ -1,24 +1,27 @@
-import re, allure
+import allure
 from playwright.async_api import Page
-# from pytest import mark
+from pytest import mark
 
+@mark.desktop
 @allure.title("Accept the use of cookies")
 def test_accept_cookies(desktop_app):
   desktop_app.click_button("Accept cookies")
 
+@mark.desktop
 @allure.title("Check Founders' section => check if all 3 founders' names are displayed")
 # @mark.test_desktop(1)
 def test_founders(desktop_app):
     founder_names = "Dmitry Balyasny", "Taylor O'Malley", "Scott Schroeder"
     desktop_app.hover_over('About us')
+    desktop_app.hover_over('About us')
     desktop_app.navigate_to_menu('Leadership')
     for founder_name in founder_names:
         assert desktop_app.leadership.check_founders_exist(founder_name)
 
-
+@mark.desktop
 @allure.title("Check 'Contact us' form => check required fields trigger validation errors")
 def test_validation(desktop_app):
-    desktop_app.navigate_to('Contact us')
+    desktop_app.navigate_to_footer('Contact Us')
     #Trigger errors on the form
     desktop_app.click_button('Submit')
     validation_messages = "^First Name\*This field is required$", "^Last Name\*This field is required$", "^E-mail Address\*This field is required$",
@@ -26,10 +29,10 @@ def test_validation(desktop_app):
     for validation_message in validation_messages:
         assert desktop_app.contact_us.validate_contact_form(validation_message)
 
-
+@mark.desktop
 @allure.title("Check 'Contact us' form => test invalid inputs (e.g. wrong email format) and verify correct error messages")
 def test_invalid_input(desktop_app):
-    desktop_app.navigate_to('Contact us')
+    desktop_app.navigate_to_footer('Contact Us')
     desktop_app.contact_us.fill_text("First Name*", "Ivan")
     desktop_app.contact_us.fill_text("Last Name*", "Valchuk")
     desktop_app.contact_us.fill_text("E-mail Address*", "ivan.valchuk@gmail.com")
@@ -42,9 +45,10 @@ def test_invalid_input(desktop_app):
     for validation_message in validation_messages:
         assert desktop_app.contact_us.verify_correct_error_message(validation_message)
 
+@mark.desktop
 @allure.title("Check 'Contact us' form submission")
 def test_submit_contact_form(desktop_app):
-    desktop_app.navigate_to('Contact us')
+    desktop_app.navigate_to_footer('Contact Us')
     desktop_app.contact_us.fill_text("First Name*", "John")
     desktop_app.contact_us.fill_text("Last Name*", "Smith")
     desktop_app.contact_us.fill_text("E-mail Address*", "test@test.com")
@@ -54,6 +58,7 @@ def test_submit_contact_form(desktop_app):
     for controller_name in controller_names:
         assert desktop_app.contact_us.verify_form_was_sent(controller_name)
 
+@mark.desktop
 @allure.title("Check locations => check if all 3 primary offices are displayed")
 def test_primary_offices(desktop_app):
     desktop_app.hover_over('About us')

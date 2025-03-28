@@ -21,5 +21,8 @@ class Contact:
     @allure.step
     def verify_form_was_sent(self, controller_name: str):
         return self.page.get_by_role("textbox", name = controller_name).input_value() is None
+
+
+   
     
         

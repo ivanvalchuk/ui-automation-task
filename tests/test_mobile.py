@@ -1,11 +1,12 @@
 import allure
-import json
-# from pytest import mark
+from pytest import mark
 
+@mark.mobile
 @allure.title("Accept the use of cookies")
 def test_accept_cookies(mobile_app):
     mobile_app.click_button("Accept cookies")
 
+@mark.mobile
 @allure.title("Check Founders' section => check if all 3 founders' names are displayed")
 # @mark.test_mobile(1)
 def test_founders(mobile_app):
@@ -17,19 +18,24 @@ def test_founders(mobile_app):
     for founder_name in founder_names:
         assert mobile_app.leadership.check_founders_exist(founder_name)
 
+@mark.mobile
 @allure.title("Check 'Contact us' form => check required fields trigger validation errors")
 def test_validation(mobile_app):
-    mobile_app.navigate_to('Contact us')
+    mobile_app.navigate_to_footer('Contact us')
      #Trigger errors on the form
+    mobile_app.click_button('Submit')
+    mobile_app.click_button('Submit')
+    mobile_app.click_button('Submit')
     mobile_app.click_button('Submit')
     validation_messages = "^First Name\*This field is required$", "^Last Name\*This field is required$", "^E-mail Address\*This field is required$",
     "^Your Message\*This field is required$"
     for validation_message in validation_messages:
         assert mobile_app.contact_us.validate_contact_form(validation_message)
 
+@mark.mobile
 @allure.title("Check 'Contact us' form => test invalid inputs (e.g. wrong email format) and verify correct error messages")
 def test_invalid_input(mobile_app):
-    mobile_app.navigate_to('Contact us')
+    mobile_app.navigate_to_footer('Contact us')
     mobile_app.contact_us.fill_text("First Name*", "Ivan")
     mobile_app.contact_us.fill_text("Last Name*", "Valchuk")
     mobile_app.contact_us.fill_text("E-mail Address*", "ivan.valchuk@gmail.com")
@@ -42,9 +48,10 @@ def test_invalid_input(mobile_app):
     for validation_message in validation_messages:
         assert mobile_app.contact_us.verify_correct_error_message(validation_message)
 
+@mark.mobile
 @allure.title("Check 'Contact us' form submission")
 def test_submit_contact_form(mobile_app):
-    mobile_app.navigate_to('Contact us')
+    mobile_app.navigate_to_footer('Contact us')
     mobile_app.contact_us.fill_text("First Name*", "John")
     mobile_app.contact_us.fill_text("Last Name*", "Smith")
     mobile_app.contact_us.fill_text("E-mail Address*", "test@test.com")
@@ -54,6 +61,7 @@ def test_submit_contact_form(mobile_app):
     for controller_name in controller_names:
         assert mobile_app.contact_us.verify_form_was_sent(controller_name)
 
+@mark.mobile
 @allure.title("Check locations => check if all 3 primary offices are displayed")
 def test_primary_offices(mobile_app):
     mobile_app.click_button("Open Main Navigation")

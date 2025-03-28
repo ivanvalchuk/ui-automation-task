@@ -24,7 +24,7 @@ class App:
     @allure.step
     def hover_over(self, label: str):
         self.page.get_by_label("Header").get_by_role("link", name = label).hover()
-
+       
     @allure.step
     def navigate_to(self, link: str):
         self.page.get_by_role("link", name = link).click()
@@ -32,12 +32,15 @@ class App:
     @allure.step
     def navigate_to_menu(self, menu: str):
         self.page.get_by_label("Header").get_by_role("link", name = menu).click()
+
+    @allure.step
+    def navigate_to_footer(self, menu: str):
+        self.page.get_by_label("Footer").get_by_role("link", name = menu).click()
     
     @allure.step
     def click_button(self, button: str):
         self.page.get_by_role("button", name = button).click()
         
-    
     def close(self):
         self.page.close()   
         self.context.close()
