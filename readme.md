@@ -10,8 +10,8 @@
 1. Clone the repository from https://github.com/ivanvalchuk/ui-automation-task.git
 2. "cd" to the folder "ui-automation-task" and go to "tests".
 3. Run the following commands for launching tests:
-    - "./tests/test_desktop.py" contains test cases for running on Desktop.
-    - "./tests/test_mobile.py" contains test cases for running on Mobile.
+- "./tests/test_desktop.py" contains test cases for running on Desktop.
+- "./tests/test_mobile.py" contains test cases for running on Mobile.
 
 ### Running intstructions
 - "pytest -m desktop" - runs the tests on Desktop browsers (e.g. Chromium).
