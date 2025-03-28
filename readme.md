@@ -17,6 +17,8 @@
 - "pytest -m desktop" - runs the tests on Desktop browsers (e.g. Chromium).
 - "pytest -m mobile" - runs the tests on emualated mobile devices (e.g. iPhone 15).
 - "pytest -m desktop --lf" / "pytest -m mobile --lf" - re-runs the previous failed tests for Desktop / Mobile.
+By default, the tests are run in the 'headless' mode and on Chromium browser on Desktop and iPhone 15. In order to change to the 'headed'  mode, please change this in "./pytest.ini" by setting headless to False. Adding support for other browsers (Firefox, Webkit)
+can be done in the "./conftest" file by adding params to the corresponding fixtures, e.g. "firefox", "webkit", "Galaxy S9+", "iPhone 14".
 
 ### How to set up reporting
 1. Install the plugin for Alure reporting using "pip install allure-pytest".
